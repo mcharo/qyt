@@ -36,3 +36,4 @@ This extension hides non-player content on YouTube watch pages by default, leavi
 
 - YouTube is a single-page app; this extension re-applies focus mode when navigating between videos.
 - To remove it, go back to `chrome://extensions` and disable or remove the extension.
+- Generated with Opus 4.6 and GPT-5.3 Codex using Cursor
