@@ -6,7 +6,7 @@ This extension hides non-player content on YouTube watch pages by default, leavi
 
 - Automatically enables focus mode on `youtube.com/watch` pages
 - Hides surrounding content (header, comments, recommendations, side panels)
-- Adds an optional details mode that reveals useful watch-page info (e.g., description and playlist controls) while still hiding recommendations/comments
+- Adds an optional details mode that reveals description, playlist controls, and chapters while still hiding recommendations/comments
 - Automatically hides Shorts shelves/cards on YouTube home (`youtube.com/`)
 - Shows custom in-player overlay details (video title + channel name) on watch pages
 - Shows overlay UI only on mouse/keyboard/touch activity, then auto-hides
@@ -30,7 +30,7 @@ This extension hides non-player content on YouTube watch pages by default, leavi
 4. Select this project folder.
 5. Open `https://www.youtube.com/watch?v=dQw4w9WgXcQ` (or any video).
 6. The page should open in player-focus mode by default.
-7. Use the top-right button to show or hide the rest of the page.
+7. Use the top-right controls to toggle details or the full page.
 
 ## Notes
 
