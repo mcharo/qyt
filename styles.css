@@ -50,40 +50,142 @@ body.yt-player-focus-mode ytd-watch-flexy .html5-main-video {
   object-fit: contain !important;
 }
 
+body.yt-hide-shorts-home ytd-reel-shelf-renderer,
+body.yt-hide-shorts-home ytd-rich-shelf-renderer[is-shorts],
+body.yt-hide-shorts-home ytd-rich-section-renderer:has(ytd-reel-shelf-renderer),
+body.yt-hide-shorts-home ytd-rich-item-renderer:has(a[href^="/shorts/"]),
+body.yt-hide-shorts-home ytd-video-renderer:has(a[href^="/shorts/"]) {
+  display: none !important;
+}
+
 #yt-player-focus-controls {
   position: fixed;
   top: 12px;
   right: 12px;
   z-index: 1000000;
   display: inline-flex;
-  gap: 8px;
+  align-items: center;
+  gap: 2px;
+  padding: 4px;
+  border-radius: 10px;
+  background: rgba(15, 15, 15, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.yt-focus-controls-sep {
+  width: 1px;
+  height: 16px;
+  margin: 0 2px;
+  background: rgba(255, 255, 255, 0.16);
+  flex-shrink: 0;
 }
 
 #yt-player-focus-home,
+#yt-player-focus-details,
 #yt-player-focus-toggle {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 76px;
-  height: 36px;
-  border: 1px solid rgba(255, 255, 255, 0.45);
-  border-radius: 18px;
-  background: rgba(0, 0, 0, 0.75);
-  color: #fff;
-  font-size: 13px;
-  font-weight: 600;
-  font-family: Arial, sans-serif;
+  height: 30px;
+  padding: 0 14px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.85);
+  font: 500 12px/1 "Roboto", "YouTube Sans", Arial, sans-serif;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
   cursor: pointer;
   user-select: none;
+  transition: background 120ms ease, color 120ms ease;
 }
 
 #yt-player-focus-home:hover,
+#yt-player-focus-details:hover,
 #yt-player-focus-toggle:hover {
-  background: rgba(0, 0, 0, 0.9);
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+}
+
+#yt-player-focus-details.yt-focus-btn-active,
+#yt-player-focus-toggle.yt-focus-btn-active {
+  background: rgba(255, 255, 255, 0.9);
+  color: #0f0f0f;
+}
+
+#yt-player-focus-details.yt-focus-btn-active:hover,
+#yt-player-focus-toggle.yt-focus-btn-active:hover {
+  background: #fff;
 }
 
 #yt-player-focus-home:focus-visible,
+#yt-player-focus-details:focus-visible,
 #yt-player-focus-toggle:focus-visible {
   outline: 2px solid #3ea6ff;
-  outline-offset: 2px;
+  outline-offset: 1px;
+}
+
+#yt-player-focus-metadata {
+  position: fixed;
+  left: 12px;
+  right: 12px;
+  bottom: 12px;
+  z-index: 1000000;
+  max-width: min(780px, calc(100vw - 24px));
+  padding: 10px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  background: rgba(15, 15, 15, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  color: #fff;
+  font-family: "Roboto", "YouTube Sans", Arial, sans-serif;
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+
+#yt-player-focus-title {
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.35;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#yt-player-focus-channel {
+  margin-top: 4px;
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.84);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+body.yt-player-focus-ui-visible #yt-player-focus-metadata {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+body.yt-player-details-mode ytd-masthead,
+body.yt-player-details-mode tp-yt-app-drawer,
+body.yt-player-details-mode ytd-mini-guide-renderer,
+body.yt-player-details-mode #guide,
+body.yt-player-details-mode #comments,
+body.yt-player-details-mode #chat,
+body.yt-player-details-mode #related {
+  display: none !important;
+}
+
+body.yt-player-details-mode ytd-watch-next-secondary-results-renderer ytd-compact-video-renderer,
+body.yt-player-details-mode ytd-watch-next-secondary-results-renderer ytd-compact-radio-renderer,
+body.yt-player-details-mode ytd-watch-next-secondary-results-renderer ytd-compact-playlist-renderer,
+body.yt-player-details-mode ytd-watch-next-secondary-results-renderer ytd-shelf-renderer,
+body.yt-player-details-mode ytd-watch-next-secondary-results-renderer ytd-item-section-renderer {
+  display: none !important;
 }
