@@ -14,7 +14,7 @@ This extension hides non-player content on YouTube watch pages by default, leavi
 
 ## Screenshots
 
-**Focus mode** — player only, no distractions:
+**Focus mode (Default)** — player only, no distractions:
 
 ![Focus mode](assets/focus-mode.png)
 
