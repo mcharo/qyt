@@ -4,17 +4,35 @@ This extension hides non-player content on YouTube watch pages by default, leavi
 
 ## Features
 
-- Automatically enables focus mode on `youtube.com/watch` pages
-- Hides surrounding content (header, comments, recommendations, side panels)
-- Adds an optional details mode that reveals description, playlist controls, and chapters while still hiding recommendations/comments
-- Automatically hides Shorts shelves/cards on YouTube home (`youtube.com/`)
-- Shows custom in-player overlay details (video title + channel name) on watch pages
-- Shows overlay UI only on mouse/keyboard/touch activity, then auto-hides
-- Adds floating controls in the top-right of the overlay:
-  - `Home` to navigate to YouTube home
-  - `Show Details` / `Hide Details` to toggle the middle details mode
-  - `Show Page` to bring back normal YouTube layout
-  - `Hide Page` to re-enable focus mode
+- **Focus mode** (default): fullscreen player with everything else hidden
+- **Details mode**: reveals description, playlist controls, and chapters while hiding recommendations and comments
+- **Full page mode**: restores the normal YouTube layout
+- Hides Shorts shelves/cards on the YouTube home page
+- Shows video title overlay on mouse/keyboard/touch activity, then auto-hides
+- In focus/details modes, a floating top bar provides `Home`, `Show Details`, and `Show Page` controls
+- In full page mode, `Show Details` and `Hide Page` integrate directly into YouTube's native player controls
+
+## Screenshots
+
+**Focus mode** — player only, no distractions:
+
+![Focus mode](assets/focus-mode.png)
+
+**Focus mode with controls** — appears on mouse activity, then auto-hides:
+
+![Focus mode controls](assets/focus-mode-controls.png)
+
+**Details mode** — description, playlist controls, and chapters visible:
+
+![Details mode](assets/details-mode.png)
+
+**Details mode with controls**:
+
+![Details mode controls](assets/details-mode-controls.png)
+
+**Full page mode** — controls integrated into YouTube's native player bar:
+
+![Full page controls](assets/full-page-controls.png)
 
 ## Project files
 
@@ -28,9 +46,9 @@ This extension hides non-player content on YouTube watch pages by default, leavi
 2. Enable **Developer mode** (top-right toggle).
 3. Click **Load unpacked**.
 4. Select this project folder.
-5. Open `https://www.youtube.com/watch?v=dQw4w9WgXcQ` (or any video).
-6. The page should open in player-focus mode by default.
-7. Use the top-right controls to toggle details or the full page.
+5. Open any YouTube video.
+6. The page should open in focus mode by default.
+7. Move the mouse to reveal controls, then toggle between modes.
 
 ## Notes
 

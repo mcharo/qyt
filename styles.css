@@ -62,6 +62,7 @@ body.yt-hide-shorts-home ytd-video-renderer:has(a[href^="/shorts/"]) {
   position: fixed;
   top: 12px;
   right: 12px;
+  left: auto;
   z-index: 1000000;
   display: inline-flex;
   align-items: center;
@@ -72,6 +73,11 @@ body.yt-hide-shorts-home ytd-video-renderer:has(a[href^="/shorts/"]) {
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.08);
+  --yt-focus-controls-shift-x: 0px;
+  opacity: 0;
+  transform: translate(var(--yt-focus-controls-shift-x), -6px);
+  pointer-events: none;
+  transition: opacity 180ms ease, transform 180ms ease;
 }
 
 .yt-focus-controls-sep {
@@ -148,6 +154,7 @@ body.yt-hide-shorts-home ytd-video-renderer:has(a[href^="/shorts/"]) {
   transition: opacity 180ms ease, transform 180ms ease;
 }
 
+
 #yt-player-focus-title {
   font-size: 15px;
   font-weight: 700;
@@ -170,6 +177,92 @@ body.yt-hide-shorts-home ytd-video-renderer:has(a[href^="/shorts/"]) {
 body.yt-player-focus-ui-visible #yt-player-focus-metadata {
   opacity: 1;
   transform: translateY(0);
+}
+
+body.yt-player-focus-ui-visible #yt-player-focus-controls {
+  opacity: 1;
+  transform: translate(var(--yt-focus-controls-shift-x), 0);
+  pointer-events: auto;
+}
+
+#yt-player-focus-controls-title {
+  display: none;
+  flex: 1;
+  min-width: 0;
+  padding: 0 12px;
+  text-align: center;
+  font: 400 13px/1 "Roboto", "YouTube Sans", Arial, sans-serif;
+  color: rgba(255, 255, 255, 0.7);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.yt-focus-controls-sep-end {
+  display: none;
+}
+
+body.yt-player-focus-mode #yt-player-focus-controls,
+body.yt-player-details-mode #yt-player-focus-controls {
+  left: 12px;
+  right: 12px;
+  top: 12px;
+  border-radius: 10px;
+  --yt-focus-controls-shift-x: 0;
+}
+
+body.yt-player-focus-mode #yt-player-focus-controls-title,
+body.yt-player-details-mode #yt-player-focus-controls-title {
+  display: block;
+}
+
+body.yt-player-focus-mode .yt-focus-controls-sep-end,
+body.yt-player-details-mode .yt-focus-controls-sep-end {
+  display: block;
+}
+
+body.yt-player-details-mode #yt-player-focus-title {
+  display: none;
+}
+
+#yt-player-focus-player-buttons {
+  display: inline-flex;
+  align-items: center;
+  height: 100%;
+  gap: 4px;
+  margin-right: 4px;
+}
+
+.yt-focus-player-btn.ytp-button,
+.yt-focus-player-btn.ytp-button::before,
+.yt-focus-player-btn.ytp-button::after {
+  background: none !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+}
+
+.yt-focus-player-btn.ytp-button {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: auto !important;
+  height: 32px !important;
+  padding: 0 12px !important;
+  border: none !important;
+  border-radius: 18px !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+  font: 500 13px/1 "Roboto", "YouTube Sans", Arial, sans-serif !important;
+  letter-spacing: 0.2px !important;
+  vertical-align: middle !important;
+  white-space: nowrap !important;
+  cursor: pointer !important;
+  transition: background-color 100ms ease !important;
+}
+
+.yt-focus-player-btn.ytp-button:hover {
+  background-color: rgba(255, 255, 255, 0.15) !important;
+  color: #fff !important;
 }
 
 body.yt-player-details-mode ytd-masthead,

@@ -3,15 +3,17 @@
   const DETAILS_MODE_CLASS = "yt-player-details-mode";
   const HIDE_SHORTS_CLASS = "yt-hide-shorts-home";
   const UI_VISIBLE_CLASS = "yt-player-focus-ui-visible";
-  const HIDE_UI_DELAY_MS = 1800;
+  const HIDE_UI_DELAY_MS = 3000;
 
   const METADATA_ID = "yt-player-focus-metadata";
   const TITLE_ID = "yt-player-focus-title";
   const CHANNEL_ID = "yt-player-focus-channel";
   const CONTROLS_ID = "yt-player-focus-controls";
+  const CONTROLS_TITLE_ID = "yt-player-focus-controls-title";
   const BUTTON_ID = "yt-player-focus-toggle";
   const DETAILS_BUTTON_ID = "yt-player-focus-details";
   const HOME_BUTTON_ID = "yt-player-focus-home";
+  const PLAYER_BUTTONS_ID = "yt-player-focus-player-buttons";
   const HOME_URL = "https://www.youtube.com/";
   const WATCH_MODE_FOCUS = "focus";
   const WATCH_MODE_DETAILS = "details";
@@ -46,7 +48,7 @@
 
     metadata.appendChild(title);
     metadata.appendChild(channel);
-    document.documentElement.appendChild(metadata);
+    document.body.appendChild(metadata);
     return metadata;
   }
 
@@ -91,15 +93,95 @@
       applyMode();
     });
 
-    const separator = document.createElement("div");
-    separator.className = "yt-focus-controls-sep";
+    const sep1 = document.createElement("div");
+    sep1.className = "yt-focus-controls-sep";
+
+    const controlsTitle = document.createElement("span");
+    controlsTitle.id = CONTROLS_TITLE_ID;
+
+    const sep2 = document.createElement("div");
+    sep2.className = "yt-focus-controls-sep yt-focus-controls-sep-end";
 
     controls.appendChild(homeButton);
-    controls.appendChild(separator);
+    controls.appendChild(sep1);
+    controls.appendChild(controlsTitle);
+    controls.appendChild(sep2);
     controls.appendChild(detailsButton);
     controls.appendChild(toggleButton);
-    document.documentElement.appendChild(controls);
+    document.body.appendChild(controls);
     return controls;
+  }
+
+  function ensurePlayerButtons() {
+    let container = document.getElementById(PLAYER_BUTTONS_ID);
+    if (container && container.isConnected) {
+      return container;
+    }
+
+    const rightControls = document.querySelector(
+      ".ytp-right-controls-left, .ytp-right-controls"
+    );
+    if (!rightControls) {
+      return null;
+    }
+
+    container = document.createElement("span");
+    container.id = PLAYER_BUTTONS_ID;
+
+    const detailsBtn = document.createElement("button");
+    detailsBtn.className = "ytp-button yt-focus-player-btn";
+    detailsBtn.dataset.action = "details";
+    detailsBtn.textContent = "Show Details";
+    detailsBtn.title = "Toggle details mode";
+    detailsBtn.addEventListener("click", () => {
+      watchMode =
+        watchMode === WATCH_MODE_DETAILS ? WATCH_MODE_FOCUS : WATCH_MODE_DETAILS;
+      applyMode();
+    });
+
+    const toggleBtn = document.createElement("button");
+    toggleBtn.className = "ytp-button yt-focus-player-btn";
+    toggleBtn.dataset.action = "toggle";
+    toggleBtn.textContent = "Hide Page";
+    toggleBtn.title = "Toggle full page visibility";
+    toggleBtn.addEventListener("click", () => {
+      watchMode = watchMode === WATCH_MODE_FULL ? WATCH_MODE_FOCUS : WATCH_MODE_FULL;
+      applyMode();
+    });
+
+    container.appendChild(detailsBtn);
+    container.appendChild(toggleBtn);
+    rightControls.insertBefore(container, rightControls.firstChild);
+    return container;
+  }
+
+  function updatePlayerButtons() {
+    const fullMode = watchMode === WATCH_MODE_FULL && isWatchPage();
+
+    if (!fullMode) {
+      const existing = document.getElementById(PLAYER_BUTTONS_ID);
+      if (existing) {
+        existing.style.display = "none";
+      }
+      return;
+    }
+
+    const container = ensurePlayerButtons();
+    if (!container) {
+      return;
+    }
+
+    container.style.display = "";
+
+    const detailsBtn = container.querySelector('[data-action="details"]');
+    if (detailsBtn) {
+      detailsBtn.textContent = "Show Details";
+    }
+
+    const toggleBtn = container.querySelector('[data-action="toggle"]');
+    if (toggleBtn) {
+      toggleBtn.textContent = "Hide Page";
+    }
   }
 
   function getWatchTitle() {
@@ -125,19 +207,27 @@
     const title = document.getElementById(TITLE_ID);
     const channel = document.getElementById(CHANNEL_ID);
     const onWatchPage = isWatchPage();
+    const compactControlsMode = watchMode === WATCH_MODE_FULL;
 
     if (!onWatchPage) {
       metadata.style.display = "none";
       return;
     }
 
-    metadata.style.display = "block";
-    if (title) {
-      title.textContent = getWatchTitle() || "Loading title...";
+    const titleText = getWatchTitle() || "Loading title...";
+    const channelName = getWatchChannelName();
+
+    const controlsTitle = document.getElementById(CONTROLS_TITLE_ID);
+    if (controlsTitle) {
+      controlsTitle.textContent = compactControlsMode ? "" : titleText;
     }
-    if (channel) {
-      const channelName = getWatchChannelName();
-      channel.textContent = channelName ? channelName : "";
+
+    if (watchMode === WATCH_MODE_DETAILS) {
+      metadata.style.display = "block";
+      if (title) title.textContent = titleText;
+      if (channel) channel.textContent = channelName;
+    } else {
+      metadata.style.display = "none";
     }
   }
 
@@ -187,18 +277,20 @@
     const toggleButton = document.getElementById(BUTTON_ID);
     const detailsButton = document.getElementById(DETAILS_BUTTON_ID);
     const onWatchPage = isWatchPage();
+    const fullMode = watchMode === WATCH_MODE_FULL;
 
     if (!onWatchPage) {
       controls.style.display = "none";
+      updatePlayerButtons();
       return;
     }
 
-    controls.style.display = "inline-flex";
+    controls.style.display = fullMode ? "none" : "inline-flex";
+
     if (toggleButton) {
-      const fullPageVisible = watchMode === WATCH_MODE_FULL;
-      toggleButton.textContent = fullPageVisible ? "Hide Page" : "Show Page";
-      toggleButton.setAttribute("aria-pressed", String(fullPageVisible));
-      toggleButton.classList.toggle("yt-focus-btn-active", fullPageVisible);
+      toggleButton.textContent = fullMode ? "Hide Page" : "Show Page";
+      toggleButton.setAttribute("aria-pressed", String(fullMode));
+      toggleButton.classList.toggle("yt-focus-btn-active", fullMode);
     }
 
     if (detailsButton) {
@@ -207,6 +299,8 @@
       detailsButton.setAttribute("aria-pressed", String(detailsVisible));
       detailsButton.classList.toggle("yt-focus-btn-active", detailsVisible);
     }
+
+    updatePlayerButtons();
   }
 
   function applyMode() {
