@@ -16,23 +16,23 @@ This extension hides non-player content on YouTube watch pages by default, leavi
 
 **Focus mode (Default)** - player only, no distractions:
 
-![Focus mode](assets/focus-mode.png)
+![Focus mode](assets/focus-mode.jpg)
 
 **Focus mode with controls** - appears on mouse activity, then auto-hides:
 
-![Focus mode controls](assets/focus-mode-controls.png)
+![Focus mode controls](assets/focus-mode-controls.jpg)
 
 **Details mode** - description, playlist controls, and chapters visible:
 
-![Details mode](assets/details-mode.png)
+![Details mode](assets/details-mode.jpg)
 
 **Details mode with controls**:
 
-![Details mode controls](assets/details-mode-controls.png)
+![Details mode controls](assets/details-mode-controls.jpg)
 
 **Full page mode** - controls integrated into YouTube's native player bar:
 
-![Full page controls](assets/full-page-controls.png)
+![Full page controls](assets/full-page-controls.jpg)
 
 ## Project files
 
