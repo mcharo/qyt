@@ -22,6 +22,7 @@
   let currentUrl = "";
   let watchMode = WATCH_MODE_FOCUS;
   let hideUiTimeoutId = null;
+  let wasTheaterMode = false;
 
   function isWatchPage() {
     return window.location.pathname === "/watch";
@@ -29,6 +30,24 @@
 
   function isHomePage() {
     return window.location.pathname === "/";
+  }
+
+  function isTheaterMode() {
+    const watchFlexy = document.querySelector("ytd-watch-flexy");
+    return watchFlexy && watchFlexy.hasAttribute("theater");
+  }
+
+  function setTheaterMode(enabled) {
+    const watchFlexy = document.querySelector("ytd-watch-flexy");
+    if (!watchFlexy) return;
+
+    const currentlyTheater = watchFlexy.hasAttribute("theater");
+    if (enabled === currentlyTheater) return;
+
+    const theaterButton = document.querySelector(".ytp-size-button");
+    if (theaterButton) {
+      theaterButton.click();
+    }
   }
 
   function ensureMetadata() {
@@ -320,6 +339,7 @@
     const onHomePage = isHomePage();
     const focusModeEnabled = watchMode === WATCH_MODE_FOCUS;
     const detailsModeEnabled = watchMode === WATCH_MODE_DETAILS;
+    const fullModeEnabled = watchMode === WATCH_MODE_FULL;
 
     if (onWatchPage && focusModeEnabled) {
       document.body.classList.add(MODE_CLASS);
@@ -336,6 +356,17 @@
       document.body.classList.add(HIDE_SHORTS_CLASS);
     } else {
       document.body.classList.remove(HIDE_SHORTS_CLASS);
+    }
+
+    if (onWatchPage) {
+      if (focusModeEnabled || detailsModeEnabled) {
+        if (!isTheaterMode()) {
+          wasTheaterMode = false;
+          setTheaterMode(true);
+        }
+      } else if (fullModeEnabled && !wasTheaterMode) {
+        setTheaterMode(false);
+      }
     }
 
     if (!onWatchPage) {
@@ -355,11 +386,13 @@
 
     currentUrl = url;
     watchMode = WATCH_MODE_FOCUS;
+    wasTheaterMode = isTheaterMode();
     applyMode();
   }
 
   function startUrlWatcher() {
     currentUrl = window.location.href;
+    wasTheaterMode = isTheaterMode();
     registerUiVisibilityHandlers();
     applyMode();
 
