@@ -1,6 +1,6 @@
-# YouTube Player Focus Mode (Chrome Extension)
+# qyt - YouTube Player Focus Mode (Chrome Extension)
 
-This extension hides non-player content on YouTube watch pages by default, leaving the video player as the main visible element.
+A Chrome extension that hides non-player content on YouTube watch pages by default, leaving the video player as the main visible element.
 
 ## Features
 
@@ -9,7 +9,7 @@ This extension hides non-player content on YouTube watch pages by default, leavi
 - **Full page mode**: restores the normal YouTube layout
 - Hides Shorts shelves/cards on the YouTube home page
 - Shows video title overlay on mouse/keyboard/touch activity, then auto-hides
-- In focus/details modes, a floating top bar provides `Home`, `Show Details`, and `Show Page` controls
+- In focus/details modes, a floating top bar provides `Home`, `Channel`, `Show Details`, and `Show Page` controls
 - In full page mode, `Show Details` and `Hide Page` integrate directly into YouTube's native player controls
 
 ## Screenshots
@@ -52,6 +52,6 @@ This extension hides non-player content on YouTube watch pages by default, leavi
 
 ## Notes
 
-- YouTube is a single-page app; this extension re-applies focus mode when navigating between videos.
-- To remove it, go back to `chrome://extensions` and disable or remove the extension.
+- YouTube is a single-page app; qyt re-applies focus mode when navigating between videos.
+- To remove qyt, go back to `chrome://extensions` and disable or remove the extension.
 - Generated with Opus 4.6 and GPT-5.3 Codex using Cursor

@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "YouTube Player Focus Mode",
+  "name": "qyt — YouTube Player Focus Mode",
   "version": "1.0.0",
   "description": "Hide all non-player content on YouTube watch pages with a quick toggle button.",
   "icons": {
