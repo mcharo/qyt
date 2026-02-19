@@ -89,6 +89,7 @@ body.yt-hide-shorts-home ytd-video-renderer:has(a[href^="/shorts/"]) {
 }
 
 #yt-player-focus-home,
+#yt-player-focus-channel,
 #yt-player-focus-details,
 #yt-player-focus-toggle {
   display: inline-flex;
@@ -109,6 +110,7 @@ body.yt-hide-shorts-home ytd-video-renderer:has(a[href^="/shorts/"]) {
 }
 
 #yt-player-focus-home:hover,
+#yt-player-focus-channel:hover,
 #yt-player-focus-details:hover,
 #yt-player-focus-toggle:hover {
   background: rgba(255, 255, 255, 0.12);
@@ -127,10 +129,21 @@ body.yt-hide-shorts-home ytd-video-renderer:has(a[href^="/shorts/"]) {
 }
 
 #yt-player-focus-home:focus-visible,
+#yt-player-focus-channel:focus-visible,
 #yt-player-focus-details:focus-visible,
 #yt-player-focus-toggle:focus-visible {
   outline: 2px solid #3ea6ff;
   outline-offset: 1px;
+}
+
+#yt-player-focus-channel:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+#yt-player-focus-channel:disabled:hover {
+  background: transparent;
+  color: rgba(255, 255, 255, 0.85);
 }
 
 #yt-player-focus-metadata {
@@ -159,16 +172,6 @@ body.yt-hide-shorts-home ytd-video-renderer:has(a[href^="/shorts/"]) {
   font-size: 15px;
   font-weight: 700;
   line-height: 1.35;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-#yt-player-focus-channel {
-  margin-top: 4px;
-  font-size: 13px;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.84);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -223,6 +226,10 @@ body.yt-player-details-mode .yt-focus-controls-sep-end {
 
 body.yt-player-details-mode #yt-player-focus-title {
   display: none;
+}
+
+body.yt-player-details-mode #yt-player-focus-metadata {
+  display: none !important;
 }
 
 #yt-player-focus-player-buttons {

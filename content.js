@@ -7,12 +7,12 @@
 
   const METADATA_ID = "yt-player-focus-metadata";
   const TITLE_ID = "yt-player-focus-title";
-  const CHANNEL_ID = "yt-player-focus-channel";
   const CONTROLS_ID = "yt-player-focus-controls";
   const CONTROLS_TITLE_ID = "yt-player-focus-controls-title";
   const BUTTON_ID = "yt-player-focus-toggle";
   const DETAILS_BUTTON_ID = "yt-player-focus-details";
   const HOME_BUTTON_ID = "yt-player-focus-home";
+  const CHANNEL_BUTTON_ID = "yt-player-focus-channel";
   const PLAYER_BUTTONS_ID = "yt-player-focus-player-buttons";
   const HOME_URL = "https://www.youtube.com/";
   const WATCH_MODE_FOCUS = "focus";
@@ -43,11 +43,7 @@
     const title = document.createElement("div");
     title.id = TITLE_ID;
 
-    const channel = document.createElement("div");
-    channel.id = CHANNEL_ID;
-
     metadata.appendChild(title);
-    metadata.appendChild(channel);
     document.body.appendChild(metadata);
     return metadata;
   }
@@ -68,6 +64,18 @@
     homeButton.setAttribute("aria-label", "Go to YouTube home page");
     homeButton.addEventListener("click", () => {
       window.location.href = HOME_URL;
+    });
+
+    const channelButton = document.createElement("button");
+    channelButton.id = CHANNEL_BUTTON_ID;
+    channelButton.type = "button";
+    channelButton.textContent = "Channel";
+    channelButton.setAttribute("aria-label", "Go to video channel");
+    channelButton.addEventListener("click", () => {
+      const url = getWatchChannelUrl();
+      if (url) {
+        window.location.href = url;
+      }
     });
 
     const toggleButton = document.createElement("button");
@@ -103,6 +111,7 @@
     sep2.className = "yt-focus-controls-sep yt-focus-controls-sep-end";
 
     controls.appendChild(homeButton);
+    controls.appendChild(channelButton);
     controls.appendChild(sep1);
     controls.appendChild(controlsTitle);
     controls.appendChild(sep2);
@@ -193,19 +202,18 @@
     return titleElement ? titleElement.textContent.trim() : "";
   }
 
-  function getWatchChannelName() {
-    const channelElement =
+  function getWatchChannelUrl() {
+    const channelLink =
       document.querySelector("ytd-watch-metadata #channel-name a") ||
       document.querySelector("#owner #channel-name a") ||
       document.querySelector("ytd-channel-name a");
 
-    return channelElement ? channelElement.textContent.trim() : "";
+    return channelLink ? channelLink.href : "";
   }
 
   function updateMetadata() {
     const metadata = ensureMetadata();
     const title = document.getElementById(TITLE_ID);
-    const channel = document.getElementById(CHANNEL_ID);
     const onWatchPage = isWatchPage();
     const compactControlsMode = watchMode === WATCH_MODE_FULL;
 
@@ -215,17 +223,21 @@
     }
 
     const titleText = getWatchTitle() || "Loading title...";
-    const channelName = getWatchChannelName();
 
     const controlsTitle = document.getElementById(CONTROLS_TITLE_ID);
     if (controlsTitle) {
       controlsTitle.textContent = compactControlsMode ? "" : titleText;
     }
 
+    const channelButton = document.getElementById(CHANNEL_BUTTON_ID);
+    if (channelButton) {
+      const channelUrl = getWatchChannelUrl();
+      channelButton.disabled = !channelUrl;
+    }
+
     if (watchMode === WATCH_MODE_DETAILS) {
       metadata.style.display = "block";
       if (title) title.textContent = titleText;
-      if (channel) channel.textContent = channelName;
     } else {
       metadata.style.display = "none";
     }
