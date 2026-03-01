@@ -48,6 +48,9 @@ body.yt-player-focus-mode ytd-watch-flexy .html5-main-video {
 
 body.yt-player-focus-mode ytd-watch-flexy .html5-main-video {
   object-fit: contain !important;
+  object-position: center !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
 }
 
 body.yt-hide-shorts-home ytd-reel-shelf-renderer,
